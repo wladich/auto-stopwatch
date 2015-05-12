@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="UTF-8">
+
+
+	<title>auto-stopwatch</title>
+	
+	<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+
+			a:link, a:visited {
+				color: #fff;
+			}
+
+			a:hover {
+				color: #53d2fc;
+			}
+
+			html {
+				background: #333;
+				color: #fff;
+				font-family: Menlo, sans-serif;
+			}
+
+			.controls {
+				position: fixed;
+				text-align: center;
+				top: 1em;
+				width: 100%;
+				word-spacing: 2em;
+			}
+
+			.button {
+				font-size: 1.2em;
+				text-decoration: none;
+				border: .01em solid #999;
+				border-radius: 0.5em;
+				padding: 0.8em;
+				background: rgba(255, 255, 255, 0.1);
+				box-shadow: 0px .2em #000;
+				border-top-color: rgba(255, 255, 255, 0.9);;
+				/*text-shadow: 0 0 1em lime;*/
+			}
+
+			.button:hover {
+				background: #53d2fc;
+				color: white;
+				text-shadow: 0 0 1em #000;
+			}
+
+			.stopwatch {
+				font-size: 20vw;
+				height: 100%;
+				line-height: 100vh;
+				text-align: center;
+				text-shadow: 0 5px 20px #000;
+				font-family: Menlo;
+				cursor: pointer;
+			}
+
+			.results {
+				border-color: lime;
+				margin: 0 auto;
+				position: fixed;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				width: 10em;
+			}
+		</style>
+
+		<script src="js/prefixfree.min.js"></script>
+	</head>
+
+	<body>
+		<nav class="controls">
+			<a href="#" class="button" onClick="Stopwatch.toggle();">START/STOP</a>
+			<a href="#" class="button" onClick="Stopwatch.lap();">LAP</a>
+			<a href="#" class="button" onClick="Stopwatch.clear();">CLEAR</a>
+			<a href="#" class="button" onClick="Stopwatch.restart();">RESET</a>
+		</nav>
+		<div class="stopwatch" onclick="Stopwatch.toggle()"></div>
+		<table class="results"></table>
+		<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+		<script src="js/index.js"></script>	
+	</body>
+</html>
