@@ -1,55 +1,20 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	<meta charset="UTF-8">
+		<meta charset="UTF-8">
 
-
-	<title>auto-stopwatch</title>
-	
-	<style>
+		<title>dhulihan/auto-stopwatch</title>
+		
+		<style>
 			* {
 				margin: 0;
 				padding: 0;
-			}
-
-			a:link, a:visited {
-				color: #fff;
-			}
-
-			a:hover {
-				color: #53d2fc;
 			}
 
 			html {
 				background: #333;
 				color: #fff;
 				font-family: Menlo, sans-serif;
-			}
-
-			.controls {
-				position: fixed;
-				text-align: center;
-				top: 1em;
-				width: 100%;
-				word-spacing: 2em;
-			}
-
-			.button {
-				font-size: 1.2em;
-				text-decoration: none;
-				border: .01em solid #999;
-				border-radius: 0.5em;
-				padding: 0.8em;
-				background: rgba(255, 255, 255, 0.1);
-				box-shadow: 0px .2em #000;
-				border-top-color: rgba(255, 255, 255, 0.9);;
-				/*text-shadow: 0 0 1em lime;*/
-			}
-
-			.button:hover {
-				background: #53d2fc;
-				color: white;
-				text-shadow: 0 0 1em #000;
 			}
 
 			.stopwatch {
@@ -61,32 +26,77 @@
 				font-family: Menlo;
 				cursor: pointer;
 			}
-
-			.results {
-				border-color: lime;
-				margin: 0 auto;
-				position: fixed;
-				right: 0;
-				bottom: 0;
-				left: 0;
-				width: 10em;
-			}
 		</style>
 
 		<script src="js/prefixfree.min.js"></script>
 	</head>
 
 	<body>
-		<nav class="controls">
-			<a href="#" class="button" onClick="Stopwatch.toggle();">START/STOP</a>
-			<a href="#" class="button" onClick="Stopwatch.lap();">LAP</a>
-			<a href="#" class="button" onClick="Stopwatch.clear();">CLEAR</a>
-			<a href="#" class="button" onClick="Stopwatch.restart();">RESET</a>
-		</nav>
-		<div class="stopwatch" onclick="Stopwatch.toggle()"></div>
-		<table class="results"></table>
+<a href="https://github.com/dhulihan/auto-stopwatch" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a>	
+		<div class="stopwatch" onclick="Stopwatch.toggle()">
+			<span id="mins">00</span><span class="delimiter">:</span><span id="secs">00</span><!--<span class="delimiter">:</span><span id="ms">00</span>-->
+		</div>
 		<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 
-		<script src="js/index.js"></script>	
+		<script>
+			function pad(n, width, z) {
+			  z = z || '0';
+			  n = n + '';
+			  return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+			}
+
+			var Stopwatch = (function() {
+				var s;
+				return {
+					settings: {
+						stop: 0,
+						intervalMs: 1000,
+					},
+					init: function() {
+						s = this.settings;
+						var start = new Date().getTime(),
+							elapsed = '0.0',
+							stoppedMs = 0;
+						window.setInterval(function()
+						{
+							if(!s.stop){
+							    var msPassed = new Date().getTime() - start;
+							    var timedMs = msPassed - stoppedMs;
+							    var minutes = Math.floor(timedMs / 1000 / 60);
+							    $("#mins").html(pad(minutes, 2));
+							    
+							    var seconds = Math.floor(timedMs / 1000) % 60;
+							    $("#secs").html(pad(seconds, 2));
+							    
+							    // var millis = 0
+							    // $("#ms").html(pad(millis, 2));
+								
+								//console.log("raw timedMs: " + timedMs);
+							    //console.log("minutes: " + minutes);
+							    //console.log("seconds: " + seconds);
+							    //console.log("ms: " + millis);
+
+							    // elapsed = Math.floor(timedMs / 100) / 10;  
+							    // if(Math.round(elapsed) == elapsed) { elapsed += '.0'; }
+							    document.title = (pad(minutes, 2) + ":" + pad(seconds, 2));
+							} else {
+								stoppedMs = stoppedMs + s.intervalMs;
+							}
+						}, s.intervalMs);
+					},
+					start: function() {
+						s.stop = 0;
+					},
+					stop: function() {
+						s.stop = 1;
+					},
+					toggle: function() {
+						//console.log("toggle called. stop: " + s.stop);
+						s.stop = 1 - s.stop;
+					}
+				};
+			})();
+			Stopwatch.init();
+		</script>	
 	</body>
 </html>

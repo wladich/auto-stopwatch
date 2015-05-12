@@ -1,6 +1,10 @@
 # auto-stopwatch
 
-A stopwatch that starts on pageload. Good for bookmarking and opening in a new tab for quick timing of anything.
+[Run](https://cdn.rawgit.com/dhulihan/auto-stopwatch/master/index.html)
+
+A stopwatch that starts on page load. Good for bookmarking or opening in a new tab for quick timing of anything.
+
+So barebones it makes skeletons look bad.
 
 ## Credits
 
