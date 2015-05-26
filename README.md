@@ -2,9 +2,7 @@
 
 A stopwatch that starts on page load. Good for bookmarking or opening in a new tab for quick timing of anything.
 
-It's so barebones it makes skeletons look bad. Can be run as a static local file.
-
-Click on the image below to give it a go.
+[https://rawgit.com/dhulihan/auto-stopwatch/master/index.html](https://rawgit.com/dhulihan/auto-stopwatch/master/index.html)
 
 [![Thumbnail](https://raw.githubusercontent.com/dhulihan/auto-stopwatch/master/thumbnail.png)](https://rawgit.com/dhulihan/auto-stopwatch/master/index.html)
 
