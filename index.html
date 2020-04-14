@@ -1,18 +1,4 @@
 <!DOCTYPE html>
-<!--
-              __         
-.---.-.--.--.|  |_.-----.
-|  _  |  |  ||   _|  _  |
-|___._|_____||____|_____|                         
-        __                               __         __    
-.-----.|  |_.-----.-----.--.--.--.---.-.|  |_.----.|  |--.
-|__ --||   _|  _  |  _  |  |  |  |  _  ||   _|  __||     |
-|_____||____|_____|   __|________|___._||____|____||__|__|
-                  |__|                                    
-
-Author:  Dave Hulihan
-Repo:    https://github.com/dhulihan/auto-stopwatch
--->
 <html>
 	<head>
 		<meta charset="UTF-8">
@@ -34,50 +20,38 @@ Repo:    https://github.com/dhulihan/auto-stopwatch
 				line-height: 100vh;
 				text-align: center;
 				cursor: pointer;
+				user-select: none
 			}
 		</style>
 	</head>
 
 	<body>
-		<div id="stopwatch" onclick="Stopwatch.toggle()"></div>
+		<div id="stopwatch" ondblclick="Stopwatch.reset()"></div>
 
 		<script>
 			var Stopwatch = (function() {
 				var s;
 				return {
 					settings: {
-						stop: 0,
 						intervalMs: 1000,
 					},
+					start: null,
 					init: function() {
 						s = this.settings;
-						var start = new Date().getTime(),
-							elapsed = '0.0',
-							stoppedMs = 0;
-						window.setInterval(function()
+						this.reset();
+						window.setInterval(() =>
 						{
-							if(!s.stop){
-							    var msPassed = new Date().getTime() - start;
-							    var timedMs = msPassed - stoppedMs;
-							    var hours = Math.floor(timedMs / 1000 / 60 / 60);
-							    var minutes = Math.floor(timedMs / 1000 / 60) % 60;
-								var seconds = Math.floor(timedMs / 1000) % 60;
-							    var text = String(hours).padStart(2, '0') + ':' + String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
-							    document.getElementById("stopwatch").innerHTML = text;
-							    document.title = text;
-							} else {
-								stoppedMs = stoppedMs + s.intervalMs;
-							}
+							var timedMs = new Date().getTime() - this.start;
+							var hours = Math.floor(timedMs / 1000 / 60 / 60);
+							var minutes = Math.floor(timedMs / 1000 / 60) % 60;
+							var seconds = Math.floor(timedMs / 1000) % 60;
+							var text = String(hours).padStart(2, '0') + ':' + String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+							document.getElementById("stopwatch").innerHTML = text;
+							document.title = text;
 						}, s.intervalMs);
 					},
-					start: function() {
-						s.stop = 0;
-					},
-					stop: function() {
-						s.stop = 1;
-					},
-					toggle: function() {
-						s.stop = 1 - s.stop;
+					reset: function () {
+						this.start = new Date().getTime();
 					}
 				};
 			})();
