@@ -38,7 +38,7 @@
 					start: null,
 					init: function() {
 						s = this.settings;
-						this.reset();
+						this.loadStart();
 						window.setInterval(() =>
 						{
 							var timedMs = new Date().getTime() - this.start;
@@ -50,8 +50,19 @@
 							document.title = text;
 						}, s.intervalMs);
 					},
+					loadStart: function() {
+						this.start = parseFloat(localStorage.start);
+						if (isNaN(this.start)) {
+							this.start = Date.now();
+							this.saveStart();
+						}
+					},
+					saveStart: function() {
+						localStorage.start = String(this.start);
+					},
 					reset: function () {
 						this.start = new Date().getTime();
+						this.saveStart();
 					}
 				};
 			})();
